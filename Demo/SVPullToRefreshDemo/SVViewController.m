@@ -35,6 +35,41 @@
     }];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self setLastUpdateDate:[self lastUpdateDate]];
+}
+
+- (void)setLastUpdateDate:(NSDate *)date
+{
+    if(date==nil){
+        [self.tableView.pullToRefreshView setSubtitle:NSLocalizedString(@"Last update date is NULL", nil) forState:SVPullToRefreshStateAll];
+    }else{
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date]
+                                                  forKey:@"RefreshDate"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSTimeInterval timeInterval = ABS([date timeIntervalSinceNow]);
+        NSString *str;
+        if(timeInterval < 60)
+            str = NSLocalizedString(@"Just now", nil);
+        else if(timeInterval < 60*60)
+            str = [NSString stringWithFormat:NSLocalizedString(@"%.0f minutes ago", nil), timeInterval/60];
+        else if(timeInterval < 60*60*24)
+            str = [NSString stringWithFormat:NSLocalizedString(@"%.0f hours ago", nil), timeInterval/60*60];
+        else
+            str = [NSString stringWithFormat:NSLocalizedString(@"%.0f days ago", nil), timeInterval/60*60*24];
+        NSString *lastUpdateString = [NSString stringWithFormat:NSLocalizedString(@"Last update date: %@", nil), str];
+        [self.tableView.pullToRefreshView setSubtitle:lastUpdateString forState:SVPullToRefreshStateAll];
+    }
+}
+
+
+- (NSDate *)lastUpdateDate
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"RefreshDate"];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [tableView triggerPullToRefresh];
 }
@@ -59,6 +94,8 @@
         [weakSelf.tableView endUpdates];
         
         [weakSelf.tableView.pullToRefreshView stopAnimating];
+        
+        [self setLastUpdateDate:[NSDate date]];
     });
 }
 

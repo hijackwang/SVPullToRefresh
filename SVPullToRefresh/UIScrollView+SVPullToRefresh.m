@@ -433,7 +433,7 @@ static char UIScrollViewPullToRefreshView;
 
 - (SVPullToRefreshArrow *)arrow {
     if(!_arrow) {
-		_arrow = [[SVPullToRefreshArrow alloc]initWithFrame:CGRectMake(0, self.bounds.size.height-54, 22, 48)];
+		_arrow = [[SVPullToRefreshArrow alloc]initWithFrame:CGRectMake(0, self.bounds.size.height-54, 22, 35)];
         _arrow.backgroundColor = [UIColor clearColor];
 		[self addSubview:_arrow];
     }
@@ -451,7 +451,7 @@ static char UIScrollViewPullToRefreshView;
 
 - (UILabel *)titleLabel {
     if(!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 210, 20)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 20)];
         _titleLabel.text = NSLocalizedString(@"Pull to refresh...",);
         _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         _titleLabel.backgroundColor = [UIColor clearColor];
@@ -463,7 +463,7 @@ static char UIScrollViewPullToRefreshView;
 
 - (UILabel *)subtitleLabel {
     if(!_subtitleLabel) {
-        _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 210, 20)];
+        _subtitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 20)];
         _subtitleLabel.font = [UIFont systemFontOfSize:12];
         _subtitleLabel.backgroundColor = [UIColor clearColor];
         _subtitleLabel.textColor = textColor;
@@ -666,12 +666,10 @@ static char UIScrollViewPullToRefreshView;
 	CGContextRef c = UIGraphicsGetCurrentContext();
 	
 	// the rects above the arrow
-	CGContextAddRect(c, CGRectMake(5, 0, 12, 4)); // to-do: use dynamic points
-	CGContextAddRect(c, CGRectMake(5, 6, 12, 4)); // currently fixed size: 22 x 48pt
-	CGContextAddRect(c, CGRectMake(5, 12, 12, 4));
-	CGContextAddRect(c, CGRectMake(5, 18, 12, 8));
-    //	CGContextAddRect(c, CGRectMake(5, 24, 12, 4));
-    //	CGContextAddRect(c, CGRectMake(5, 30, 12, 4));
+	CGContextAddRect(c, CGRectMake(7, 0, 8, 4)); // to-do: use dynamic points
+	CGContextAddRect(c, CGRectMake(7, 6, 8, 4)); // currently fixed size: 22 x 48pt
+	CGContextAddRect(c, CGRectMake(7, 12, 8, 4));
+	CGContextAddRect(c, CGRectMake(7, 18, 8, 8));
 	
 	// the arrow
 	CGContextMoveToPoint(c, 0, 26);
